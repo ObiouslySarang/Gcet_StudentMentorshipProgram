@@ -1,0 +1,36 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Profiles</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><div id="logo"><img src="/static/media/logo.jpg" alt="Institute Logo"> </div></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="mentorship_oppur.html">Mentorship Opportunities</a></li>
+                <li><a href="mentorprofiles.html">Mentor Profiles</a></li>
+                <li><a href="resorces.html">Resources</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>This is the Mentor Profile Page</h1>
+    <section id="mentor-profiles">
+        <h2>Mentor Profiles</h2>
+        <!-- Mentor profiles dynamically generated from the server data -->
+        <% data.forEach(user => { %>
+            <div class="mentor">
+                <h3><%= user.username %></h3>
+                <p>Email: <%= user.email %></p>
+            </div>
+        <% }); %>
+    </section>
+</body>
+</html>
