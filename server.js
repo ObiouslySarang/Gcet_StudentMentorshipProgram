@@ -1,16 +1,19 @@
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
 const Sqlite3 = require("sqlite3").verbose();
 
 const app = express();
 
 app.set('view engine', 'ejs'); // Set EJS as the view engine
-app.set('views', path.join(__dirname, 'views')); // Assuming your views are in a 'views' directory
+app.use(express.static("static")); // Setting up the static directory for usage as serving JS, CSS, media files
 
-app.use(express.static(path.join(__dirname, 'mini_project_1')));
-app.use(bodyParser.urlencoded({ extended: false }));
+// ---- Depreceated version of configuring the views and static directory
+// app.set('views', path.join(__dirname, 'views')); // Assuming your views are in a 'views' directory
+// app.use(express.static(path.join(__dirname, 'mini_project_1')));
+// ----
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Connecting to the database
 console.log("[*] Connecting to the database");
@@ -19,7 +22,7 @@ const DbConn = new Sqlite3.Database("database.db", (error) => {
         console.log("[!] Failed to connect to database");
     } else {
         console.log("[#] Connected to the database successfully");
-        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50), email VARCHAR(100), type VARCHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
+        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50), email VARCHAR(100), category CHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
             if (err) {
                 console.log("[!] Error creating table", err);
             } else {
@@ -29,20 +32,39 @@ const DbConn = new Sqlite3.Database("database.db", (error) => {
     }
 });
 
+// Defining the HTTP GET endpoints
 // Serve index.html as the main page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'mini_project_1', 'index.html'));
+    res.render("index");
 });
+app.get("/about", (request, response) => {
+    response.render("about");
+});
+app.get("/form", (request, response) => {
+     response.render("form");
+ });
+app.get("/mentorship_oppur", (request, response) => {
+    response.render("mentorship_oppur");
+});
+app.get("/mentorprofiles", (request, response) => {
+    response.render("mentorprofiles");
+});
+app.get("/resorces", (request, response) => {
+    response.render("resorces");
+});
+
+
 
 // Handling form submission
 app.post('/submit', (request, response) => {
     // Fetching the user sent details
-    const { username, email, type } = request.body;
+    const { username, email, category } = request.body;
 
     // Inserting data into the 'users' table
-    DbConn.run("INSERT INTO users (username, email, type) VALUES (?, ?, ?)", [username, email, type], (err) => {
+    DbConn.run("INSERT INTO users (username, email, category) VALUES (?, ?, ?)", [username, email, category], (err) => {
         if (err) {
-            return response.end("Failed to create the new mentor profile!")
+            console.log(err);
+            return response.end("Failed to create the new mentor profile!");
         } else {
             return response.end("Created the new mentor profile successfully");
         }
