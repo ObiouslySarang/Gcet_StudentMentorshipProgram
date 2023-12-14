@@ -83,8 +83,7 @@ app.get('/profile', (req, res) => {
             res.render('mentorprofiles', { data: rows });
         }
     });
-});
-
+} );
 // Listening on the specified port
 app.listen(3001, () => {
     const url = `http://localhost:3001`;
