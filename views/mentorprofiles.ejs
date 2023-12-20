@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,30 +9,43 @@
 <body>
     <header>
         <nav>
-            
-        <ul>
-            <li><img src="/media/logo.jpg" alt="Institute Logo" /></li>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li>
-              <a href="/mentorship_oppur">Mentorship Opportunities</a>
-            </li>
-            <li><a href="/mentorprofiles">Mentor Profiles</a></li>
-            <li><a href="/resorces">Resources</a></li>
-          </ul>
+            <ul>
+                <li><img src="/media/logo.jpg" alt="Institute Logo" /></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/mentorship_oppur">Mentorship Opportunities</a></li>
+                <li><a href="/mentorprofiles">Mentor Profiles</a></li>
+                <li><a href="/resources">Resources</a></li>
+            </ul>
         </nav>
     </header>
     <h1>This is the Mentor Profile Page</h1>
     <section id="mentor-profiles">
         <h2>Mentor Profiles</h2>
         <!-- Mentor profiles dynamically generated from the server data -->
-            <div class="mentor">
-                
-            
-            </div>
-            <% data.foreach((ele)=>{ %>
-                <div><%= ele = data.rows %> </div>
-                <% });%>
+        <div class="mentor">
+            <% if (data && data.length > 0) { %>
+                <% data.forEach((mentor) => { %>
+                    <div class="mentor-profile">
+                        <h3><%= mentor.username %></h3>
+                        <p><strong>Category:</strong> <%= mentor.category %></p>
+                        <!-- Add other profile details as needed -->
+        
+                        <!-- Example: Displaying an image if the mentor has a profile picture
+                        <% if (mentor.profilePicture) { %>
+                            <img src="<%= mentor.profilePicture %>" alt="Profile Picture">
+                        <% } %> -->
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No mentor profiles available.</p>
+            <% } %>
+        </div>
     </section>
+
+    <!-- Debugging: Output the 'data' variable -->
+    <!-- <script>
+        console.log('Data:', <% = data)%>);
+    </script> -->
 </body>
 </html>

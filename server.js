@@ -13,7 +13,7 @@ app.use(express.static("static")); // Setting up the static directory for usage 
 // ----
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connecting to the database
 console.log("[*] Connecting to the database");
@@ -80,7 +80,8 @@ app.get('/profile', (req, res) => {
             res.status(500).send("Internal Server Error");
         } else {
             // Rendering the 'mentorprofiles.ejs' page with the fetched data
-            res.render('mentorprofiles', { data: rows });
+            console.log("Fetched data:", rows);
+            res.render('mentorprofiles', { data : rows });
         }
     });
 } );
