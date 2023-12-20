@@ -22,7 +22,7 @@ const DbConn = new Sqlite3.Database("database.db", (error) => {
         console.log("[!] Failed to connect to database");
     } else {
         console.log("[#] Connected to the database successfully");
-        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50), email VARCHAR(100), category CHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
+        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,username VARCHAR(50), email VARCHAR(100), category VARCHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
             if (err) {
                 console.log("[!] Error creating table", err);
             } else {
@@ -34,8 +34,8 @@ const DbConn = new Sqlite3.Database("database.db", (error) => {
 
 // Defining the HTTP GET endpoints
 // Serve index.html as the main page
-app.get('/', (req, res) => {
-    res.render("index");
+app.get('/', (request, response) => {
+    response.render("index");
 });
 app.get("/about", (request, response) => {
     response.render("about");
