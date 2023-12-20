@@ -1,0 +1,6 @@
+# ----
+# The GITIGNORE file
+# ----
+
+node_modules/
+database.db
