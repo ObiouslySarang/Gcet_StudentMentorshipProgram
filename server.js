@@ -2,16 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Sqlite3 = require("sqlite3").verbose();
 
+// Creating the express.js app object
 const app = express();
 
 app.set('view engine', 'ejs'); // Set EJS as the view engine
-app.use(express.static("static")); // Setting up the static directory for usage as serving JS, CSS, media files
-
-// ---- Depreceated version of configuring the views and static directory
-// app.set('views', path.join(__dirname, 'views')); // Assuming your views are in a 'views' directory
-// app.use(express.static(path.join(__dirname, 'mini_project_1')));
-// ----
-
+app.use(express.static("static")); // Setting up the static directory for usage as serving JS, CSS, media file
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -46,13 +41,22 @@ app.get("/form", (request, response) => {
 app.get("/mentorship_oppur", (request, response) => {
     response.render("mentorship_oppur");
 });
-app.get("/mentorprofiles", (request, response) => {
-    response.render("mentorprofiles");
+app.get('/profile', (req, res) => {
+    // Fetching data from the 'users' table
+    DbConn.all("SELECT * FROM users", (err, rows) => {
+        if (err) {
+            console.log("[!] Error fetching data:", err);
+            res.status(500).send("Internal Server Error");
+        } else {
+            // Rendering the 'mentorprofiles.ejs' page with the fetched data
+            console.log("Fetched data:", rows);
+            res.render('mentorprofiles', { data : rows });
+        }
+    });
 });
-app.get("/resorces", (request, response) => {
-    response.render("resorces");
+app.get("/resources", (request, response) => {
+    response.render("resources");
 });
-
 
 
 // Handling form submission
@@ -71,20 +75,6 @@ app.post('/submit', (request, response) => {
     });
 });
 
-// Displaying data on the profile page
-app.get('/profile', (req, res) => {
-    // Fetching data from the 'users' table
-    DbConn.all("SELECT * FROM users", (err, rows) => {
-        if (err) {
-            console.log("[!] Error fetching data:", err);
-            res.status(500).send("Internal Server Error");
-        } else {
-            // Rendering the 'mentorprofiles.ejs' page with the fetched data
-            console.log("Fetched data:", rows);
-            res.render('mentorprofiles', { data : rows });
-        }
-    });
-} );
 // Listening on the specified port
 app.listen(3001, () => {
     const url = `http://localhost:3001`;
