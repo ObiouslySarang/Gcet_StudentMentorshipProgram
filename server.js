@@ -17,7 +17,7 @@ const DbConn = new Sqlite3.Database("database.db", (error) => {
         console.log("[!] Failed to connect to database");
     } else {
         console.log("[#] Connected to the database successfully");
-        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,username VARCHAR(50), email VARCHAR(100), category VARCHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
+        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,username VARCHAR(50), email VARCHAR(100), type VARCHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
             if (err) {
                 console.log("[!] Error creating table", err);
             } else {
@@ -65,7 +65,7 @@ app.post('/submit', (request, response) => {
     const { username, email, type } = request.body;
 
     // Inserting data into the 'users' table
-    DbConn.run("INSERT INTO users (username, email, category) VALUES (?, ?, ?)", [username, email, type], (err) => {
+    DbConn.run("INSERT INTO users (username, email, type) VALUES (?, ?, ?)", [username, email, type], (err) => {
         if (err) {
             console.log(err);
             return response.end("Failed to create the new mentor profile!");
@@ -78,6 +78,6 @@ app.post('/submit', (request, response) => {
 // Listening on the specified port
 app.listen(3001, () => {
     const url = `http://localhost:3001`;
-    console.log(`[#] Listening on port 3001}`);
+    console.log(`[#] Listening on port 3001`);
     console.log(`[#] Access the application at: ${url}`);
 });

@@ -56,10 +56,11 @@ img{
 }
 
 .mentor {
-    border: 1px solid #ccc;
     padding: 10px;
-    margin: 10px 0;
+    margin: 20px 0;
     border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 
@@ -151,8 +152,13 @@ footer {
 /* styles for dynamically generated cards */
 .card {
     /* Add shadows to create the "card" effect */
+    display:flex;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 30%;
+    /* height: 30%; */
     transition: 0.3s;
+    margin: 10px;
+    padding-left: 20px;
   }
   
   /* On mouse-over, add a deeper shadow */
@@ -164,4 +170,9 @@ footer {
   .container {
     padding: 2px 16px;
   }
+  #mentor-profiles{
+    display: flex;
+    width:100%;
+  }
+  
   

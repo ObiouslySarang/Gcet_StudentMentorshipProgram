@@ -20,19 +20,19 @@
         </nav>
     </header>
     <h1>This is the Mentor Profile Page</h1>
+    <h2>Mentor Profiles</h2>
     <section id="mentor-profiles">
-        <h2>Mentor Profiles</h2>
         <!-- Mentor profiles dynamically generated from the server data -->
         <div class="mentor">
             <% if (data && data.length > 0) { %>
                 <% data.forEach((mentor) => { %>
                     <div class="card"> 
-                        <img src="<%= mentor.profilePicture || 'default_avatar.png' %>" alt="Avatar" style="width:100%">
+                        <img src="<%= mentor.profilePicture || '/media/default_avatar.webp' %>" alt="Avatar" style="width:100%">
                         <div class="container">
-                            <h6><b><%= mentor.username %></b></h6>
+                            <h3><b><%= mentor.username %></b></h3>
                             <p><strong>Category:</strong> <%= mentor.type %></p>
                             <p><b>Contact here : <%= mentor.email %></b></p>
-                            <!-- Add other profile details as needed -->
+                        
                         </div>
                     </div>
                 <% }); %>
