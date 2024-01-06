@@ -26,21 +26,21 @@
         <div class="mentor">
             <% if (data && data.length > 0) { %>
                 <% data.forEach((mentor) => { %>
-                    <div class="mentor-profile">
-                        <h3><%= mentor.username %></h3>
-                        <p><strong>Category:</strong> <%= mentor.category %></p>
-                        <!-- Add other profile details as needed -->
-        
-                        <!-- Example: Displaying an image if the mentor has a profile picture
-                        <% if (mentor.profilePicture) { %>
-                            <img src="<%= mentor.profilePicture %>" alt="Profile Picture">
-                        <% } %> -->
+                    <div class="card"> 
+                        <img src="<%= mentor.profilePicture || 'default_avatar.png' %>" alt="Avatar" style="width:100%">
+                        <div class="container">
+                            <h6><b><%= mentor.username %></b></h6>
+                            <p><strong>Category:</strong> <%= mentor.type %></p>
+                            <p><b>Contact here : <%= mentor.email %></b></p>
+                            <!-- Add other profile details as needed -->
+                        </div>
                     </div>
                 <% }); %>
             <% } else { %>
                 <p>No mentor profiles available.</p>
             <% } %>
         </div>
+        
     </section>
 
     <!-- Debugging: Output the 'data' variable -->

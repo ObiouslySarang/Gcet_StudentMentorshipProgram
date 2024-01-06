@@ -49,7 +49,7 @@ app.get('/profile', (req, res) => {
             res.status(500).send("Internal Server Error");
         } else {
             // Rendering the 'mentorprofiles.ejs' page with the fetched data
-            console.log("Fetched data:", rows);
+            
             res.render('mentorprofiles', { data : rows });
         }
     });
@@ -62,10 +62,10 @@ app.get("/resources", (request, response) => {
 // Handling form submission
 app.post('/submit', (request, response) => {
     // Fetching the user sent details
-    const { username, email, category } = request.body;
+    const { username, email, type } = request.body;
 
     // Inserting data into the 'users' table
-    DbConn.run("INSERT INTO users (username, email, category) VALUES (?, ?, ?)", [username, email, category], (err) => {
+    DbConn.run("INSERT INTO users (username, email, category) VALUES (?, ?, ?)", [username, email, type], (err) => {
         if (err) {
             console.log(err);
             return response.end("Failed to create the new mentor profile!");
