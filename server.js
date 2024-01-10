@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+const storage = multer.memoryStorage(); // Use memory storage for simplicity; adjust as needed
+const upload = multer({ storage: storage });
 const bodyParser = require('body-parser');
 const Sqlite3 = require("sqlite3").verbose();
 
@@ -17,7 +20,7 @@ const DbConn = new Sqlite3.Database("database.db", (error) => {
         console.log("[!] Failed to connect to database");
     } else {
         console.log("[#] Connected to the database successfully");
-        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,username VARCHAR(50), email VARCHAR(100), type VARCHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP)", (err) => {
+        DbConn.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,username VARCHAR(50), email VARCHAR(100), type VARCHAR(10), created_on DATE DEFAULT CURRENT_TIMESTAMP,profilePhoto BLOB)", (err) => {
             if (err) {
                 console.log("[!] Error creating table", err);
             } else {
@@ -59,13 +62,17 @@ app.get("/resources", (request, response) => {
 });
 
 
+
 // Handling form submission
-app.post('/submit', (request, response) => {
+app.post('/submit', upload.single('profilePhoto'), (request, response) => {
     // Fetching the user sent details
     const { username, email, type } = request.body;
 
+    // Access the uploaded file from request.file
+    const profilePhoto = request.file;
+
     // Inserting data into the 'users' table
-    DbConn.run("INSERT INTO users (username, email, type) VALUES (?, ?, ?)", [username, email, type], (err) => {
+    DbConn.run("INSERT INTO users (username, email, type, profilePhoto) VALUES (?, ?, ?, ?)", [username, email, type, profilePhoto ? profilePhoto.buffer : null], (err) => {
         if (err) {
             console.log(err);
             return response.end("Failed to create the new mentor profile!");
@@ -74,6 +81,7 @@ app.post('/submit', (request, response) => {
         }
     });
 });
+
 
 // Listening on the specified port
 app.listen(3001, () => {

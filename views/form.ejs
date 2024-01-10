@@ -1,84 +1,96 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
 
-        h2 {
-            text-align: center;
-        }
+      h2 {
+        text-align: center;
+      }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+      .form-group {
+        margin-bottom: 20px;
+      }
 
-        label {
-            font-weight: bold;
-        }
+      label {
+        font-weight: bold;
+      }
 
-        input[type="text"],
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        input[type="url"],
-        select {
-            width: 100%;
-            padding: 10px;  
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+      input[type="text"],
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      input[type="url"],
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
 
-        input[type="submit"] {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h2>Registration Form</h2>
-        <form>
-            <div class="form-group">
-                <label for="profilePhoto">Profile Photo:</label>
-                <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*">
-                <p class="help-block">Upload a profile photo in JPG, PNG, or GIF format.</p>
-            </div>
-            
-            <div class="form-group">
-                <label for="user-type-input">I am a:</label>
-                <select id="user-type-input" name="user-type-input" required>
-                    <option value="mentor">Mentor</option>
-                    <option value="mentee">Mentee</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="username-input">Username:</label>
-                <input type="text" id="username-input" name="username-input" required>
-            </div>
-            <!-- <div class="form-group">
+      <h2>Registration Form</h2>
+      <form>
+        <div class="form-group">
+          <label for="profilePhoto">Profile Photo:</label>
+          <input
+            type="file"
+            id="profilePhoto"
+            name="profilePhoto"
+            accept="image/*"
+          />
+          <p class="help-block">
+            Upload a profile photo in JPG, PNG, or GIF format.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="user-type-input">I am a:</label>
+          <select id="user-type-input" name="user-type-input" required>
+            <option value="mentor">Mentor</option>
+            <option value="mentee">Mentee</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="username-input">Username:</label>
+          <input
+            type="text"
+            id="username-input"
+            name="username-input"
+            required
+          />
+        </div>
+        <!-- <div class="form-group">
                 <label for="yearOfStudy">Year of Study:</label>
                 <input type="text" id="yearOfStudy" name="yearOfStudy" required>
             </div>
@@ -90,22 +102,60 @@
                 <label for="section">Section:</label>
                 <input type="text" id="section" name="section" required>
             </div> -->
-            <div class="form-group">
-                <label for="email-input">Email:</label>
-                <input type="mail" id="email-input" name="email-input" required>
-            </div>
-            <!-- <div class="form-group">
+        <div class="form-group">
+          <label for="email-input">Email:</label>
+          <input type="mail" id="email-input" name="email-input" required />
+        </div>
+        <!-- <div class="form-group">
                 <label for="skills">Technical Skills:</label>
                 <textarea id="skills" name="skills" rows="4" required></textarea>
             </div> -->
-            <div class="form-group">
-                <button class="btn" id="create-profile-btn">Create</button>
-            </div>
-        </form>
+        <div class="form-group">
+          <button class="btn" id="create-profile-btn">Create</button>
+        </div>
+      </form>
     </div>
-</body>
+  </body>
+  <script type="text/javascript">
+    document
+      .getElementById("create-profile-btn")
+      .addEventListener("click", () => {
+        try {
+          // Getting the data
+          const username = document.getElementById("username-input").value;
+          const email = document.getElementById("email-input").value;
+          const user_type = document.getElementById("user-type-input").value;
 
-<script type="text/javascript">
+          // Getting the profile photo input
+          const profilePhotoInput = document.getElementById("profilePhoto");
+          const profilePhoto = profilePhotoInput.files[0]; // Get the first selected file
+
+          // Create FormData object and append form data
+          const formData = new FormData();
+          formData.append("username", username);
+          formData.append("email", email);
+          formData.append("type", user_type);
+          formData.append("profilePhoto", profilePhoto);
+
+          // Making the fetch request with FormData
+          fetch("/submit", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((response) => {
+              alert(response);
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        } catch (error) {
+          alert(error);
+        }
+      });
+  </script>
+
+  <!-- <script type="text/javascript">
 document.getElementById("create-profile-btn").addEventListener("click", () => {
     // Getting the data
     const username = document.getElementById("username-input").value;
@@ -125,5 +175,17 @@ document.getElementById("create-profile-btn").addEventListener("click", () => {
         alert(error);
     });
 })
-    </script>
+    </script> -->
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
 </html>
