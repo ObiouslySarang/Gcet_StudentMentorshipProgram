@@ -1,1 +1,1 @@
-# mini_project_1
+# MINI PROJECT 3rd Semester
